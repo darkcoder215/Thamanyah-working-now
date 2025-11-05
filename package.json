@@ -1,0 +1,61 @@
+{
+	"name": "web-tools",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"prepare": "husky",
+		"format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+		"format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\""
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"*.{json,css,md}": [
+			"prettier --write"
+		]
+	},
+	"optionalDependencies": {
+		"@tailwindcss/oxide-linux-x64-gnu": "^4.1.11",
+		"lightningcss-linux-x64-gnu": "^1.30.1"
+	},
+	"dependencies": {
+		"@ant-design/icons": "6.0.0",
+		"@ant-design/nextjs-registry": "^1.1.0",
+		"@ant-design/v5-patch-for-react-19": "^1.0.3",
+		"@supabase/ssr": "^0.6.1",
+		"@supabase/supabase-js": "^2.54.0",
+		"antd": "^5.26.7",
+		"clsx": "^2.1.1",
+		"firebase": "^12.1.0",
+		"google-auth-library": "9.15.1",
+		"googleapis": "148.0.0",
+		"next": "^15.4.6",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1"
+	},
+	"devDependencies": {
+		"@eslint/eslintrc": "^3.3.1",
+		"@tailwindcss/postcss": "^4.1.11",
+		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
+		"@types/estree": "^1.0.8",
+		"@types/node": "^20.19.10",
+		"@types/react": "^19.1.9",
+		"@types/react-dom": "^19.1.7",
+		"eslint": "^9.33.0",
+		"eslint-config-next": "15.1.6",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.2",
+		"postcss": "^8.5.6",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.6.14",
+		"tailwindcss": "^4.1.11",
+		"typescript": "^5.9.2"
+	},
+	"packageManager": "pnpm@10.12.4"
+}
