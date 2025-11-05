@@ -39,26 +39,26 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 
 	const handleApply = () => {
 		Modal.confirm({
-			title: "Apply Changes?",
+			title: "تطبيق التغييرات؟",
 			icon: <ExclamationCircleOutlined />,
 			content: (
 				<div className="space-y-2">
-					<p>This will:</p>
+					<p>سيؤدي ذلك إلى:</p>
 					<ul className="list-disc mr-6">
-						<li>Update the salary-data.ts file</li>
-						<li>Create a backup of the current version</li>
+						<li>تحديث ملف salary-data.ts</li>
+						<li>إنشاء نسخة احتياطية من الإصدار الحالي</li>
 						{process.env.NEXT_PUBLIC_ENABLE_AUTO_COMMIT === "true" && (
-							<li>Commit changes to git</li>
+							<li>حفظ التغييرات في git</li>
 						)}
 						{process.env.NEXT_PUBLIC_VERCEL_DEPLOY_HOOK && (
-							<li>Trigger automatic deployment</li>
+							<li>تشغيل النشر التلقائي</li>
 						)}
 					</ul>
-					<p className="mt-2 text-gray-500">You can rollback via git if needed.</p>
+					<p className="mt-2 text-gray-500">يمكنك التراجع عبر git إذا لزم الأمر.</p>
 				</div>
 			),
-			okText: "Yes, Apply Changes",
-			cancelText: "Cancel",
+			okText: "نعم، طبّق التغييرات",
+			cancelText: "إلغاء",
 			okButtonProps: { danger: true },
 			onOk: async () => {
 				setApplying(true)
@@ -67,19 +67,19 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 
 					if (result.success) {
 						Modal.success({
-							title: "Changes Applied Successfully!",
+							title: "تم تطبيق التغييرات بنجاح!",
 							content: (
 								<div className="space-y-2">
-									<p>✓ Salary structure updated</p>
-									<p>✓ Backup saved: {result.backupPath}</p>
+									<p>✓ تم تحديث هيكل الرواتب</p>
+									<p>✓ تم حفظ النسخة الاحتياطية: {result.backupPath}</p>
 									{process.env.NEXT_PUBLIC_ENABLE_AUTO_COMMIT === "true" && (
-										<p>✓ Committed to git</p>
+										<p>✓ تم الحفظ في git</p>
 									)}
 									{process.env.NEXT_PUBLIC_VERCEL_DEPLOY_HOOK && (
-										<p>⏳ Deployment triggered</p>
+										<p>⏳ تم تشغيل النشر</p>
 									)}
 									<p className="mt-4 text-gray-600">
-										Your changes will be live in ~2 minutes.
+										ستكون التغييرات مباشرة خلال دقيقتين تقريباً.
 									</p>
 								</div>
 							),
@@ -89,14 +89,14 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 						})
 					} else {
 						Modal.error({
-							title: "Failed to Apply Changes",
+							title: "فشل تطبيق التغييرات",
 							content: result.error,
 						})
 					}
 				} catch (error) {
 					Modal.error({
-						title: "Error",
-						content: error instanceof Error ? error.message : "Unknown error",
+						title: "خطأ",
+						content: error instanceof Error ? error.message : "خطأ غير معروف",
 					})
 				} finally {
 					setApplying(false)
@@ -108,11 +108,11 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 	const renderChangeType = (type: string) => {
 		switch (type) {
 			case "added":
-				return <Tag color="green">Added</Tag>
+				return <Tag color="green">مضاف</Tag>
 			case "modified":
-				return <Tag color="blue">Modified</Tag>
+				return <Tag color="blue">معدّل</Tag>
 			case "removed":
-				return <Tag color="red">Removed</Tag>
+				return <Tag color="red">محذوف</Tag>
 			default:
 				return <Tag>{type}</Tag>
 		}
@@ -157,26 +157,26 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 	// Table columns
 	const baseSalaryColumns = [
 		{
-			title: "Level",
+			title: "المستوى",
 			dataIndex: "level",
 			key: "level",
 			width: 80,
 		},
 		{
-			title: "Change",
+			title: "التغيير",
 			dataIndex: "type",
 			key: "type",
 			width: 100,
 			render: renderChangeType,
 		},
 		{
-			title: "Current Min",
+			title: "الحد الأدنى الحالي",
 			dataIndex: ["old", "min"],
 			key: "currentMin",
 			render: (val: number) => (val ? val.toLocaleString() : "-"),
 		},
 		{
-			title: "New Min",
+			title: "الحد الأدنى الجديد",
 			dataIndex: ["new", "min"],
 			key: "newMin",
 			render: (val: number, record: any) => (
@@ -187,13 +187,13 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 			),
 		},
 		{
-			title: "Current Max",
+			title: "الحد الأقصى الحالي",
 			dataIndex: ["old", "max"],
 			key: "currentMax",
 			render: (val: number) => (val ? val.toLocaleString() : "-"),
 		},
 		{
-			title: "New Max",
+			title: "الحد الأقصى الجديد",
 			dataIndex: ["new", "max"],
 			key: "newMax",
 			render: (val: number, record: any) => (
@@ -207,32 +207,32 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 
 	const trackColumns = [
 		{
-			title: "Track",
+			title: "المسار",
 			dataIndex: "trackName",
 			key: "trackName",
 			width: 200,
 		},
 		{
-			title: "Level",
+			title: "المستوى",
 			dataIndex: "level",
 			key: "level",
 			width: 80,
 		},
 		{
-			title: "Change",
+			title: "التغيير",
 			dataIndex: "type",
 			key: "type",
 			width: 100,
 			render: renderChangeType,
 		},
 		{
-			title: "Current %",
+			title: "النسبة الحالية",
 			dataIndex: "old",
 			key: "old",
 			render: (val: number) => (val !== undefined ? `${val}%` : "-"),
 		},
 		{
-			title: "New %",
+			title: "النسبة الجديدة",
 			dataIndex: "new",
 			key: "new",
 			render: (val: number, record: any) => (
@@ -246,25 +246,25 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 
 	const regionalColumns = [
 		{
-			title: "Location",
+			title: "الموقع",
 			dataIndex: "locationName",
 			key: "locationName",
 		},
 		{
-			title: "Change",
+			title: "التغيير",
 			dataIndex: "type",
 			key: "type",
 			width: 100,
 			render: renderChangeType,
 		},
 		{
-			title: "Current %",
+			title: "النسبة الحالية",
 			dataIndex: "old",
 			key: "old",
 			render: (val: number) => (val !== undefined ? `${val}%` : "-"),
 		},
 		{
-			title: "New %",
+			title: "النسبة الجديدة",
 			dataIndex: "new",
 			key: "new",
 			render: (val: number, record: any) => (
@@ -281,11 +281,11 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 			{/* Summary Card */}
 			<Card>
 				<div className="space-y-4">
-					<Title level={4}>Preview Changes from: {data.filename}</Title>
+					<Title level={4}>معاينة التغييرات من: {data.filename}</Title>
 
 					<Alert
-						message={`Found ${data.diff.length} change${data.diff.length !== 1 ? "s" : ""}`}
-						description="Review carefully before applying. You can rollback via git if needed."
+						message={`تم العثور على ${data.diff.length} تغيير${data.diff.length !== 1 ? "ات" : ""}`}
+						description="راجع بعناية قبل التطبيق. يمكنك التراجع عبر git إذا لزم الأمر."
 						type={data.diff.length > 0 ? "warning" : "success"}
 						icon={data.diff.length > 0 ? <WarningOutlined /> : <CheckCircleOutlined />}
 						showIcon
@@ -294,35 +294,35 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 					{/* Impact Summary */}
 					<div className="grid grid-cols-2 gap-4 md:grid-cols-5">
 						<Statistic
-							title="Base Salaries"
+							title="الرواتب الأساسية"
 							value={data.impact.summary.baseSalaryChanges}
 							valueStyle={{
 								color: data.impact.summary.baseSalaryChanges > 0 ? "#1890ff" : undefined,
 							}}
 						/>
 						<Statistic
-							title="Career Tracks"
+							title="المسارات الوظيفية"
 							value={data.impact.summary.trackChanges}
 							valueStyle={{
 								color: data.impact.summary.trackChanges > 0 ? "#1890ff" : undefined,
 							}}
 						/>
 						<Statistic
-							title="Regional"
+							title="التعديلات الإقليمية"
 							value={data.impact.summary.regionalChanges}
 							valueStyle={{
 								color: data.impact.summary.regionalChanges > 0 ? "#1890ff" : undefined,
 							}}
 						/>
 						<Statistic
-							title="Job Levels"
+							title="المستويات الوظيفية"
 							value={data.impact.summary.jobLevelChanges}
 							valueStyle={{
 								color: data.impact.summary.jobLevelChanges > 0 ? "#1890ff" : undefined,
 							}}
 						/>
 						<Statistic
-							title="Config"
+							title="الإعدادات"
 							value={data.impact.summary.configChanges}
 							valueStyle={{
 								color: data.impact.summary.configChanges > 0 ? "#1890ff" : undefined,
@@ -332,7 +332,7 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 
 					{data.warnings && data.warnings.length > 0 && (
 						<Alert
-							message={`${data.warnings.length} Warning${data.warnings.length !== 1 ? "s" : ""}`}
+							message={`${data.warnings.length} تحذير${data.warnings.length !== 1 ? "ات" : ""}`}
 							description={
 								<ul className="list-disc mr-6">
 									{data.warnings.map((warning, i) => (
@@ -353,7 +353,7 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 					items={[
 						{
 							key: "base",
-							label: `Base Salaries (${baseSalaryChanges.length})`,
+							label: `الرواتب الأساسية (${baseSalaryChanges.length})`,
 							children:
 								baseSalaryChanges.length > 0 ? (
 									<Table
@@ -364,12 +364,12 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 										rowKey={(record) => `${record.level}-${record.type}`}
 									/>
 								) : (
-									<Alert message="No changes to base salaries" type="success" showIcon />
+									<Alert message="لا توجد تغييرات في الرواتب الأساسية" type="success" showIcon />
 								),
 						},
 						{
 							key: "tracks",
-							label: `Career Tracks (${trackChanges.length})`,
+							label: `المسارات الوظيفية (${trackChanges.length})`,
 							children:
 								trackChanges.length > 0 ? (
 									<Table
@@ -380,12 +380,12 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 										rowKey={(record) => `${record.track}-${record.level}`}
 									/>
 								) : (
-									<Alert message="No changes to career tracks" type="success" showIcon />
+									<Alert message="لا توجد تغييرات في المسارات الوظيفية" type="success" showIcon />
 								),
 						},
 						{
 							key: "regional",
-							label: `Regional (${regionalChanges.length})`,
+							label: `التعديلات الإقليمية (${regionalChanges.length})`,
 							children:
 								regionalChanges.length > 0 ? (
 									<Table
@@ -397,7 +397,7 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 									/>
 								) : (
 									<Alert
-										message="No changes to regional adjustments"
+										message="لا توجد تغييرات في التعديلات الإقليمية"
 										type="success"
 										showIcon
 									/>
@@ -405,38 +405,38 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 						},
 						{
 							key: "levels",
-							label: `Job Levels (${jobLevelChanges.length})`,
+							label: `المستويات الوظيفية (${jobLevelChanges.length})`,
 							children:
 								jobLevelChanges.length > 0 ? (
 									<div>
 										{jobLevelChanges.map((change, i) => (
 											<Card key={i} size="small" className="mb-2">
 												<Text>
-													Level {change.level}: {renderChangeType(change.type)}
+													المستوى {change.level}: {renderChangeType(change.type)}
 												</Text>
 											</Card>
 										))}
 									</div>
 								) : (
-									<Alert message="No changes to job levels" type="success" showIcon />
+									<Alert message="لا توجد تغييرات في المستويات الوظيفية" type="success" showIcon />
 								),
 						},
 						{
 							key: "config",
-							label: `Config (${configChanges.length})`,
+							label: `الإعدادات (${configChanges.length})`,
 							children:
 								configChanges.length > 0 ? (
 									<div>
 										{configChanges.map((change, i) => (
 											<Card key={i} size="small" className="mb-2">
 												<Text>
-													{change.field}: {change.old} → <Text strong>{change.new}</Text>
+													{change.field}: {change.old} ← <Text strong>{change.new}</Text>
 												</Text>
 											</Card>
 										))}
 									</div>
 								) : (
-									<Alert message="No changes to configuration" type="success" showIcon />
+									<Alert message="لا توجد تغييرات في الإعدادات" type="success" showIcon />
 								),
 						},
 					]}
@@ -447,16 +447,16 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 			<Card>
 				<div className="space-y-4">
 					<div>
-						<Text strong>Commit Message (optional but recommended)</Text>
+						<Text strong>رسالة الحفظ (اختياري لكن موصى به)</Text>
 						<TextArea
-							placeholder="e.g., Q2 2025 adjustments: Tech +5%, Egypt cost update"
+							placeholder="مثال: تعديلات الربع الثاني 2025: زيادة التقنية +5%، تحديث تكلفة مصر"
 							value={commitMessage}
 							onChange={(e) => setCommitMessage(e.target.value)}
 							rows={3}
 							className="mt-2"
 						/>
 						<Text type="secondary" className="text-sm">
-							This helps track changes in git history
+							هذا يساعد في تتبع التغييرات في سجل git
 						</Text>
 					</div>
 
@@ -469,10 +469,10 @@ export default function SalaryPreviewDiff({ data }: { data: PreviewData }) {
 							loading={applying}
 							disabled={data.diff.length === 0}
 						>
-							Apply Changes
+							تطبيق التغييرات
 						</Button>
 						<Button size="large" onClick={() => window.location.reload()}>
-							Cancel
+							إلغاء
 						</Button>
 					</Space>
 				</div>

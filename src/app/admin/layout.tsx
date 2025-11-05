@@ -25,16 +25,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 			<div className="flex min-h-screen items-center justify-center p-4">
 				<Card className="max-w-md">
 					<Alert
-						message="Access Denied"
+						message="تم رفض الدخول"
 						description={
 							<div className="space-y-2">
-								<p>You do not have permission to access this admin area.</p>
+								<p>ليس لديك صلاحية للوصول إلى هذه المنطقة الإدارية.</p>
 								<p>
-									Only users with @thmanyah.com email addresses can access salary import
-									functionality.
+									يمكن فقط للمستخدمين الذين لديهم بريد إلكتروني من @thmanyah.com الوصول إلى وظيفة
+									استيراد الرواتب.
 								</p>
 								{user && (
-									<p className="text-sm text-gray-500">Logged in as: {user.email}</p>
+									<p className="text-sm text-gray-500">تم تسجيل الدخول بـ: {user.email}</p>
 								)}
 							</div>
 						}

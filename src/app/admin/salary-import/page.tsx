@@ -27,7 +27,7 @@ export default function SalaryImportPage() {
 			} else {
 				// Show validation errors
 				Modal.error({
-					title: "Validation Failed",
+					title: "فشل التحقق من الصحة",
 					width: 600,
 					content: (
 						<div className="space-y-4">
@@ -35,13 +35,13 @@ export default function SalaryImportPage() {
 
 							{result.validationErrors && result.validationErrors.length > 0 && (
 								<div>
-									<Text strong>Errors:</Text>
+									<Text strong>الأخطاء:</Text>
 									<ul className="list-disc mr-6 mt-2 max-h-96 overflow-y-auto">
 										{result.validationErrors.map((error: any, i: number) => (
 											<li key={i} className="text-red-600">
 												<Text strong>
 													{error.sheet}
-													{error.row && `, Row ${error.row}`}
+													{error.row && `، الصف ${error.row}`}
 													{error.field && `: ${error.field}`}
 												</Text>
 												<br />
@@ -49,7 +49,7 @@ export default function SalaryImportPage() {
 												{error.value && (
 													<>
 														<br />
-														<Text type="secondary">Value: {JSON.stringify(error.value)}</Text>
+														<Text type="secondary">القيمة: {JSON.stringify(error.value)}</Text>
 													</>
 												)}
 											</li>
@@ -61,7 +61,7 @@ export default function SalaryImportPage() {
 							{result.validationWarnings && result.validationWarnings.length > 0 && (
 								<div>
 									<Text strong className="text-yellow-600">
-										Warnings:
+										التحذيرات:
 									</Text>
 									<ul className="list-disc mr-6 mt-2">
 										{result.validationWarnings.map((warning: any, i: number) => (
@@ -80,7 +80,7 @@ export default function SalaryImportPage() {
 							)}
 
 							<Alert
-								message="Please fix the errors in your Excel file and try again."
+								message="الرجاء تصحيح الأخطاء في ملف Excel والمحاولة مرة أخرى."
 								type="error"
 								showIcon
 							/>
@@ -90,8 +90,8 @@ export default function SalaryImportPage() {
 			}
 		} catch (error) {
 			Modal.error({
-				title: "Upload Failed",
-				content: error instanceof Error ? error.message : "Unknown error occurred",
+				title: "فشل الرفع",
+				content: error instanceof Error ? error.message : "حدث خطأ غير معروف",
 			})
 		} finally {
 			setLoading(false)
@@ -105,24 +105,23 @@ export default function SalaryImportPage() {
 			<Card>
 				<div className="space-y-6">
 					<div>
-						<Title level={2}>Import Salary Structure</Title>
+						<Title level={2}>استيراد هيكل الرواتب</Title>
 						<Paragraph>
-							Upload an Excel file to update the salary calculator. You'll be able to preview and
-							confirm changes before applying them.
+							قم برفع ملف Excel لتحديث حاسبة الرواتب. ستتمكن من معاينة التغييرات وتأكيدها قبل تطبيقها.
 						</Paragraph>
 					</div>
 
 					{!previewData ? (
 						<div className="space-y-4">
 							<Alert
-								message="How it works"
+								message="كيف يعمل"
 								description={
 									<ol className="list-decimal mr-6 space-y-2">
-										<li>Upload your Excel file with salary data</li>
-										<li>System validates and parses the data</li>
-										<li>Review side-by-side comparison of changes</li>
-										<li>Confirm to apply changes (automatic backup created)</li>
-										<li>Changes are committed to git and deployed</li>
+										<li>قم برفع ملف Excel الذي يحتوي على بيانات الرواتب</li>
+										<li>يقوم النظام بالتحقق من البيانات وتحليلها</li>
+										<li>راجع المقارنة التفصيلية للتغييرات</li>
+										<li>أكد لتطبيق التغييرات (يتم إنشاء نسخة احتياطية تلقائياً)</li>
+										<li>يتم حفظ التغييرات في git ونشرها</li>
 									</ol>
 								}
 								type="info"
@@ -130,10 +129,10 @@ export default function SalaryImportPage() {
 							/>
 
 							<Alert
-								message="Required Excel Format"
+								message="تنسيق Excel المطلوب"
 								description={
 									<div>
-										<Text>Your Excel file must contain these 6 sheets:</Text>
+										<Text>يجب أن يحتوي ملف Excel على هذه الأوراق الست:</Text>
 										<ul className="list-disc mr-6 mt-2">
 											<li>Base Salaries 2025</li>
 											<li>Career Tracks</li>
@@ -143,7 +142,7 @@ export default function SalaryImportPage() {
 											<li>Config</li>
 										</ul>
 										<Text type="secondary" className="mt-2 block">
-											See documentation for detailed format specifications.
+											راجع الوثائق للحصول على تفاصيل التنسيق الكاملة.
 										</Text>
 									</div>
 								}
@@ -162,10 +161,10 @@ export default function SalaryImportPage() {
 									<InboxOutlined />
 								</p>
 								<p className="ant-upload-text">
-									{loading ? "Processing..." : "Click or drag Excel file here to upload"}
+									{loading ? "جاري المعالجة..." : "اضغط أو اسحب ملف Excel هنا للرفع"}
 								</p>
 								<p className="ant-upload-hint">
-									Supports .xlsx and .xls files. File will be validated before showing preview.
+									يدعم ملفات .xlsx و .xls. سيتم التحقق من الملف قبل عرض المعاينة.
 								</p>
 							</Dragger>
 						</div>
