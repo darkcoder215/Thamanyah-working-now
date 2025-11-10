@@ -1,12 +1,27 @@
 import { createClient } from "@supabase/supabase-js"
 import { getAdvertisers, getPosts } from "@/components/manage-advertisers/lib/queries"
 
-const supabase = createClient(
-	process.env.NEXT_PUBLIC_SUPABASE_URL!,
-	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-)
+// Check if bypass mode is enabled
+const bypassAuth = process.env.NEXT_PUBLIC_BYPASS_AUTH === "true"
+
+// Create Supabase client only if not in bypass mode
+const supabase = bypassAuth
+	? null
+	: createClient(
+			process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co",
+			process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key",
+		)
 
 export async function getInitialData() {
+	// Return empty data in bypass mode
+	if (bypassAuth || !supabase) {
+		console.log("Bypass mode enabled - returning empty advertiser data")
+		return {
+			posts: [],
+			advertisers: [],
+		}
+	}
+
 	const [postsResult, advertisersResult] = await Promise.all([
 		getPosts(supabase),
 		getAdvertisers(supabase),

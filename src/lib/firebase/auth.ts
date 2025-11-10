@@ -31,6 +31,11 @@ export const signInWithGoogle = async (): Promise<{
 	user: User | null
 	error: string | null
 }> => {
+	// Skip if auth is not initialized (bypass mode)
+	if (!auth) {
+		return { user: null, error: "Auth bypass mode enabled" }
+	}
+
 	try {
 		const provider = new GoogleAuthProvider()
 		const userCredential = await signInWithPopup(auth, provider)
@@ -63,6 +68,11 @@ export const signOutUser = async (): Promise<{
 	success: boolean
 	error: string | null
 }> => {
+	// Skip if auth is not initialized (bypass mode)
+	if (!auth) {
+		return { success: true, error: null }
+	}
+
 	try {
 		await signOut(auth)
 		return { success: true, error: null }
@@ -74,5 +84,10 @@ export const signOutUser = async (): Promise<{
 
 // Listen to auth state changes
 export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {
+	// Skip if auth is not initialized (bypass mode)
+	if (!auth) {
+		return () => {} // Return empty unsubscribe function
+	}
+
 	return onAuthStateChanged(auth, callback)
 }

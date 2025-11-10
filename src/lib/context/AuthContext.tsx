@@ -28,16 +28,36 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 	const [loading, setLoading] = useState<boolean>(true)
 	const [error, setError] = useState<string | null>(null)
 
+	// Dev mode bypass - allows testing without Firebase
+	const bypassAuth = process.env.NEXT_PUBLIC_BYPASS_AUTH === "true"
+
 	useEffect(() => {
+		// If bypass mode is enabled, set a mock user
+		if (bypassAuth) {
+			setUser({
+				email: "dev@thmanyah.com",
+				displayName: "Dev User",
+				uid: "dev-user-id",
+			} as User)
+			setLoading(false)
+			return
+		}
+
 		const unsubscribe = subscribeToAuthChanges((user) => {
 			setUser(user)
 			setLoading(false)
 		})
 
 		return () => unsubscribe()
-	}, [])
+	}, [bypassAuth])
 
 	const signInWithGoogleProvider = async () => {
+		// Bypass mode - no-op
+		if (bypassAuth) {
+			console.log("Auth bypass enabled - skipping Google sign in")
+			return
+		}
+
 		try {
 			setLoading(true)
 			setError(null)
@@ -54,6 +74,12 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
 	}
 
 	const logout = async () => {
+		// Bypass mode - no-op
+		if (bypassAuth) {
+			console.log("Auth bypass enabled - skipping logout")
+			return
+		}
+
 		try {
 			setLoading(true)
 			setError(null)
