@@ -1,6 +1,6 @@
 // Firebase configuration file
-import { getApp, getApps, initializeApp } from "firebase/app"
-import { getAuth } from "firebase/auth"
+import { FirebaseApp, getApp, getApps, initializeApp } from "firebase/app"
+import { Auth, getAuth } from "firebase/auth"
 
 // Check if auth bypass is enabled
 const bypassAuth = process.env.NEXT_PUBLIC_BYPASS_AUTH === "true"
@@ -16,14 +16,14 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase only if not in bypass mode
-let app
-let auth
+let app: FirebaseApp | null
+let auth: Auth | null
 
 if (bypassAuth) {
 	console.log("Firebase bypass mode enabled - skipping initialization")
-	// Create mock objects to prevent errors
-	app = null as any
-	auth = null as any
+	// Set to null in bypass mode
+	app = null
+	auth = null
 } else {
 	app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 	auth = getAuth(app)
